@@ -1,0 +1,27 @@
+[2023-11-21T00:00:50.534+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: outcomes_dag.LOAD_FCT_OUTCOMES scheduled__2023-11-20T00:00:00+00:00 [queued]>
+[2023-11-21T00:00:50.543+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: outcomes_dag.LOAD_FCT_OUTCOMES scheduled__2023-11-20T00:00:00+00:00 [queued]>
+[2023-11-21T00:00:50.543+0000] {taskinstance.py:1361} INFO - Starting attempt 2 of 2
+[2023-11-21T00:00:50.679+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): LOAD_FCT_OUTCOMES> on 2023-11-20 00:00:00+00:00
+[2023-11-21T00:00:50.684+0000] {standard_task_runner.py:57} INFO - Started process 19541 to run task
+[2023-11-21T00:00:50.687+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'outcomes_dag', 'LOAD_FCT_OUTCOMES', 'scheduled__2023-11-20T00:00:00+00:00', '--job-id', '48', '--raw', '--subdir', 'DAGS_FOLDER/outcomes_dag.py', '--cfg-path', '/tmp/tmpo7kfw5mm']
+[2023-11-21T00:00:50.689+0000] {standard_task_runner.py:85} INFO - Job 48: Subtask LOAD_FCT_OUTCOMES
+[2023-11-21T00:00:50.730+0000] {task_command.py:416} INFO - Running <TaskInstance: outcomes_dag.LOAD_FCT_OUTCOMES scheduled__2023-11-20T00:00:00+00:00 [running]> on host dfcabe2f681c
+[2023-11-21T00:00:50.791+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='amith.nandivada' AIRFLOW_CTX_DAG_ID='outcomes_dag' AIRFLOW_CTX_TASK_ID='LOAD_FCT_OUTCOMES' AIRFLOW_CTX_EXECUTION_DATE='2023-11-20T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-11-20T00:00:00+00:00'
+[2023-11-21T00:00:52.253+0000] {logging_mixin.py:154} INFO - Executing Create Table Queries...
+[2023-11-21T00:00:52.387+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/LoadDataToPostgres.py", line 140, in load_data_to_postgres_main
+    postgres_dataloader.create_table(postgres_connection, table_query)
+  File "/opt/airflow/dags/etl_scripts/LoadDataToPostgres.py", line 108, in create_table
+    cursor.execute(table_query)
+psycopg2.errors.UndefinedTable: relation "dim_animals" does not exist
+
+[2023-11-21T00:00:52.394+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=outcomes_dag, task_id=LOAD_FCT_OUTCOMES, execution_date=20231120T000000, start_date=20231121T000050, end_date=20231121T000052
+[2023-11-21T00:00:52.404+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 48 for task LOAD_FCT_OUTCOMES (relation "dim_animals" does not exist
+; 19541)
+[2023-11-21T00:00:52.428+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-11-21T00:00:52.441+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

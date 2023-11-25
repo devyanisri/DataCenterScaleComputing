@@ -1,0 +1,27 @@
+[2023-11-21T00:00:42.901+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: outcomes_dag.LOAD_FCT_OUTCOMES scheduled__2023-11-20T00:00:00+00:00 [queued]>
+[2023-11-21T00:00:42.913+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: outcomes_dag.LOAD_FCT_OUTCOMES scheduled__2023-11-20T00:00:00+00:00 [queued]>
+[2023-11-21T00:00:42.913+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2023-11-21T00:00:43.089+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): LOAD_FCT_OUTCOMES> on 2023-11-20 00:00:00+00:00
+[2023-11-21T00:00:43.096+0000] {standard_task_runner.py:57} INFO - Started process 19535 to run task
+[2023-11-21T00:00:43.100+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'outcomes_dag', 'LOAD_FCT_OUTCOMES', 'scheduled__2023-11-20T00:00:00+00:00', '--job-id', '45', '--raw', '--subdir', 'DAGS_FOLDER/outcomes_dag.py', '--cfg-path', '/tmp/tmpsc1fr1pm']
+[2023-11-21T00:00:43.103+0000] {standard_task_runner.py:85} INFO - Job 45: Subtask LOAD_FCT_OUTCOMES
+[2023-11-21T00:00:43.161+0000] {task_command.py:416} INFO - Running <TaskInstance: outcomes_dag.LOAD_FCT_OUTCOMES scheduled__2023-11-20T00:00:00+00:00 [running]> on host dfcabe2f681c
+[2023-11-21T00:00:43.265+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='amith.nandivada' AIRFLOW_CTX_DAG_ID='outcomes_dag' AIRFLOW_CTX_TASK_ID='LOAD_FCT_OUTCOMES' AIRFLOW_CTX_EXECUTION_DATE='2023-11-20T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-11-20T00:00:00+00:00'
+[2023-11-21T00:00:44.705+0000] {logging_mixin.py:154} INFO - Executing Create Table Queries...
+[2023-11-21T00:00:44.862+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/etl_scripts/LoadDataToPostgres.py", line 140, in load_data_to_postgres_main
+    postgres_dataloader.create_table(postgres_connection, table_query)
+  File "/opt/airflow/dags/etl_scripts/LoadDataToPostgres.py", line 108, in create_table
+    cursor.execute(table_query)
+psycopg2.errors.InvalidForeignKey: there is no unique constraint matching given keys for referenced table "dim_animals"
+
+[2023-11-21T00:00:44.869+0000] {taskinstance.py:1400} INFO - Marking task as UP_FOR_RETRY. dag_id=outcomes_dag, task_id=LOAD_FCT_OUTCOMES, execution_date=20231120T000000, start_date=20231121T000042, end_date=20231121T000044
+[2023-11-21T00:00:44.891+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 45 for task LOAD_FCT_OUTCOMES (there is no unique constraint matching given keys for referenced table "dim_animals"
+; 19535)
+[2023-11-21T00:00:44.919+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-11-21T00:00:44.944+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check
