@@ -49,5 +49,5 @@ with DAG(
 
         end = BashOperator(task_id = "END", bash_command = "echo end")
 
-        start >> extract_data_to_s3 >> transform_data >> [load_dim_animals, load_dim_outcome_types, load_dim_dates, load_fct_outcomes] >> end
+        start >> extract_data_to_s3 >> transform_data >> [load_dim_animals, load_dim_outcome_types, load_dim_dates]>> load_fct_outcomes >> end
         
